@@ -32,8 +32,11 @@ jobs:
         run: terraform apply -auto-approve
 
       # 6. Save Terraform output to file
-      - name: Save Terraform Output to File
-        run: terraform output > output.txt
+      - name: Save actual file content to output.txt
+        run: |
+          file_path=$(terraform output -raw file_path)
+          cat "$file_path" > output.txt
+
 
       # 7. Upload output.txt as artifact
       - name: Upload Terraform Output
